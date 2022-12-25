@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <section class="calculator">
+    <section class="calculator__sysMenu">
+      <img class="calculator__icon" src="img/IconSysMenu.svg" alt="IconSysMenu.svg">
+      <span class="calculator__name">Калькулятор</span>
+      <div class="calculator__sysBtns">
+        <button class="hideBtn"></button>
+        <button class="minizeBtn"></button>
+        <button class="closeBtn"></button>
+      </div>
+    </section>
+
+    <header class="header">
+      <button class="header__menuBtn"></button>
+      <span class="header__title">Обычный</span>  
+      <button class="header__onTopOtherBtn"></button>
+      <button class="header__journalBtn"></button>
+    </header>
+    <section class="screen">
+      <div class="screen__last"></div>
+      <div class="screen__current"></div>
+    </section>
+    <section class="calculator__buttons">
+      <div class="memory__buttons">
+        <button class="memoryBtn" id="clearMemory">MC</button>
+        <button class="memoryBtn" id="callFromMemory">MR</button>
+        <button class="memoryBtn" id="addMemory">M+</button>
+        <button class="memoryBtn" id="subMemory">M-</button>
+        <button class="memoryBtn" id="saveMemory">MS</button>
+        <button class="memoryBtn" id="openMemory">M<span>></span></button>
+      </div>
+      <div class="main__buttons">
+        <button class="func__button" id="percentBtn">%</button>
+        <button class="func__button" id="clearInputBtn">CE</button>
+        <button class="func__button" id="clearAllBtn">C</button>
+        <button class="func__button" id="backspaceBtn">⌫</button>
+
+        <button class="func__button"><sup>1</sup>/x</button>
+        <button class="func__button">x<sup>2</sup></button>
+        <button class="func__button"><sup>2</sup>√x</button>
+        <button class="opetatorBtn" data-operator>/</button>
+
+        <button class="numberBtn" data-number>7</button>
+        <button class="numberBtn" data-number>9</button>
+        <button class="numberBtn" data-number>8</button>
+        <button class="opetatorBtn" data-operator>*</button>
+        
+        <button class="numberBtn" data-number>4</button>
+        <button class="numberBtn" data-number>5</button>
+        <button class="numberBtn" data-number>6</button>
+        <button class="opetatorBtn" data-operator>-</button>
+        
+        <button class="numberBtn" data-number>1</button>
+        <button class="numberBtn" data-number>2</button>
+        <button class="numberBtn" data-number>3</button>
+        <button class="opetatorBtn" data-operator>+</button>
+
+        <button class="func__button"><sup>+</sup>/<sub>-</sub></button>
+        <button class="numberBtn" data-number>0</button>
+        <button class="func__button">.</button>
+        <button class="func__button">=</button>
+
+      </div>
+    </section>
+  </section>
+  <footer class="footer">
+
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
