@@ -133,7 +133,7 @@ display: flex;
   justify-content: space-between;
 }
 .header div {
-  align-items: center;
+  display: flex;
 }
 
 .header button {
@@ -156,7 +156,7 @@ display: flex;
   display:inline-block;
 }
 .header__journalBtn{
-  margin-right: 4px;
+  margin-right: 8px;
 }
 .header__menuBtn::after {
   display: block;
@@ -170,7 +170,6 @@ display: flex;
 }
 .header__menuBtn:active:after {
   width: 8px;
-
 }
 .header__title{
   font-size: 20px;
