@@ -34,7 +34,7 @@ border:none;
 
 .calculator{
   width: 320px;
-  height: 500px;
+  min-height: 500px;
   border: solid 1px black;
 }
 /* sysMeny*/
@@ -129,22 +129,22 @@ display: flex;
   height: 36px;
   width: 100%;
   background-color:#202020;
-  margin-bottom: 30px;
   justify-content: space-between;
+  margin-top: 6px;
 }
 .header div {
   display: flex;
 }
 
-.header button {
+.header button ,.memoryBtn {
   height: 32px;
   width: 32px;
   border-radius: 5px;
 }
-.header button:hover {
+.header button:hover , .memoryBtn:hover {
   background-color:#363636
 }
-.header button:active {
+.header button:active ,.memoryBtn:active{
   background-color:#292929
 }
 
@@ -174,4 +174,84 @@ display: flex;
 .header__title{
   font-size: 20px;
   margin: auto 13px auto 4px;
+}
+
+/* screes */
+
+.screens{
+  width: 100%;
+  text-align: end;
+}
+
+.screen__last{
+  margin: 7px 20px auto auto;
+  font-size: 13px;
+  color:gray;
+}
+.screen__current{
+  margin-top: 12px;
+  margin-right: 13px;
+  font-size: 45px;
+}
+
+/* buttons */
+.memory__buttons{
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+  font-size: 13px;
+  height: 28px;
+  margin: 13px 1px 4px 4px;
+
+}
+.memoryBtn {
+  text-align: center  ;
+  height: 100%;
+  width: 20%;
+}
+#openMemory span {
+  padding-left: 3px;
+  font-family: monospace;
+  transform: rotate(90deg);
+  background-color: transparent;
+  display: inline-block;
+}
+
+.main__buttons{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom:2px;
+}
+.main__buttons button {
+  text-align: center  ;
+  height: 47px;
+  width: 24%;
+  border-radius: 5px;
+  margin: 1px;
+}
+.main__buttons button *{
+  background-color:transparent;
+}
+.main__buttons button:active {
+ opacity: 50%;
+}
+.func__button , .operatorBtn{ 
+  background-color: #323232
+}
+.func__button:hover  , .operatorBtn:hover{
+  background-color: #3b3b3b
+}
+.numberBtn {
+  background-color:#3b3b3b ;
+}
+.numberBtn:hover{
+  background-color:#323232;
+}
+#equalBtn{
+  background-color: #76b9ed;
+  color: #323232;
+}
+#equalBtn:hover{
+  background-color: #6da9d8;
 }
