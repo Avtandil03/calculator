@@ -14,7 +14,7 @@ img{
 }
 body{
   padding: 10px;
-  background-image: url("/img/WindowsBackground.jpg");
+  background-image: url("../img/WindowsBackground.jpg");
   background-size: cover;
 }
 
