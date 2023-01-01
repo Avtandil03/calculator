@@ -208,6 +208,7 @@ display: flex;
   text-align: center  ;
   height: 100%;
   width: 20%;
+  font-size: 12px;
 }
 #openMemory span {
   padding-left: 3px;
@@ -236,14 +237,24 @@ display: flex;
 .main__buttons button:active {
  opacity: 50%;
 }
-.func__button , .operatorBtn{ 
-  background-color: #323232
+.func__button { 
+  background-color: #323232;
+}
+#dividedBy1Btn, #degreeBtn, #squareRootBtn{
+  font-family: "math";
+  font-style: italic;
+}
+.operatorBtn{
+  background-color: #323232;
+  font-size: 20px;
+  font-family: "math";
 }
 .func__button:hover  , .operatorBtn:hover{
   background-color: #3b3b3b
 }
 .numberBtn {
   background-color:#3b3b3b ;
+  font-size: 18px;
 }
 .numberBtn:hover{
   background-color:#323232;
@@ -251,6 +262,7 @@ display: flex;
 #equalBtn{
   background-color: #76b9ed;
   color: #323232;
+  font-size: 20px;
 }
 #equalBtn:hover{
   background-color: #6da9d8;
