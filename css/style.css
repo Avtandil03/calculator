@@ -3,6 +3,9 @@ html, body{
   padding: 0;
   margin: 0;
 }
+p{
+  margin: 0;
+}
 img{
   background-color:transparent;
 }
@@ -265,4 +268,73 @@ display: flex;
 }
 #equalBtn:hover{
   background-color: #6da9d8;
+}
+
+/* footer */
+
+.bottomModal {
+  display: flex;
+  justify-content: space-between;
+  height: 40px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  background: linear-gradient(47deg, #233942 50%, #1a2741);
+}
+.calculatorIcon{
+  background-color: transparent;
+  width: 48px;
+  height: 40px;
+  display: flex;
+}
+.calculatorIcon:hover{
+  background-color: #394d55;
+}
+.calculatorIcon  img {
+ margin: auto;
+  width: 34px;
+  height: 32px;
+  background-color: transparent ;
+}
+
+.footer{
+  background-color:transparent;
+  display: flex;
+  align-items:center
+} 
+.footer *{
+  display: inline-block;
+  background-color:transparent;
+} 
+.footer a{
+  display: inline-flex;
+  width: 40px;
+  height: 100%;
+  padding: auto;
+  align-items: center;
+}
+.footer img {
+  display: block;
+  height: 20px;
+  margin: auto;
+  transition: 200ms;
+}
+.footer img:hover{
+  transform: rotate(360deg);
+  height: 25px;
+
+}
+
+.localDateTime{
+  background-color:transparent;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  font-size: 12px;
+  width: 66px;
+  margin-right: 10px;
+}
+.localDateTime * {
+  background-color:transparent;
 }

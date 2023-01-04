@@ -6,8 +6,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
   minimizeBtn = systemMenu.querySelector(".minimizeBtn"),
   closeBtn = systemMenu.querySelector(".closeBtn");
 
-  let isDown,
-  offset ;
+
+/* Перетаскивание калькулятора мышкой */
+  let isDown, offset ;
 
   systemMenu.addEventListener("mousedown", function (e) {
     if(e.target != hideBtn & e.target != minimizeBtn & e.target != closeBtn){
@@ -30,18 +31,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
       calculator.style.top = notNegative(e.clientY + offset[0]) + "px";
       calculator.style.left = notNegative(e.clientX + (offset[1])) + "px";
     }
-
   },true);
-
 
   function notNegative(number){
     if(number < 0){
       number = 0;
-    }
-      
+    }      
     return number;    
   }
 
+  
 
 
 
