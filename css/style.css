@@ -2,6 +2,7 @@ html, body{
   height: 100%;
   padding: 0;
   margin: 0;
+  overflow: hidden;
 }
 p{
   margin: 0;
@@ -36,10 +37,23 @@ border:none;
 
 .calculator{
   width: 320px;
-  min-height: 500px;
+  height: 500px;
   border: solid 1px black;
   position: absolute;
 }
+
+.hidden{
+  left: -50px !important;
+  top:500px !important;
+  transform: scale(0.5);
+  opacity: 0;
+}
+
+.closed{
+  transform: scale(0.8);
+  opacity: 0;
+}
+
 /* sysMeny*/
 .calculator__sysMenu {
   width: 100%;
@@ -286,9 +300,25 @@ display: flex;
   width: 48px;
   height: 40px;
   display: flex;
+  flex-direction: column;
+  align-items : center;
+  background-color:rgba(255, 255, 255, 0.25);
+  
 }
+.calulatorIcon__bottom{
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color:#76b9ed;
+  transition: 200ms;
+}
+
 .calculatorIcon:hover , .localDateTime *:hover, .localDateTime:hover{
-  background-color: #394d55;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.calculatorIcon:active , .localDateTime *:active, .localDateTime:active{
+  background-color: rgba(255, 255, 255, 0.05) !important;
 }
 .calculatorIcon  img {
  margin: auto;
@@ -322,7 +352,6 @@ display: flex;
 .footer img:hover{
   transform: rotate(360deg);
   height: 25px;
-
 }
 
 .localDateTime{
@@ -337,4 +366,66 @@ display: flex;
 }
 .localDateTime * {
   background-color:transparent;
+}
+
+/* resizing */
+
+.resizer{
+  position: absolute;
+  width: 5px;
+  height: 4px;
+  background-color:transparent;
+  z-index: 2;
+}
+.resizer.n{
+  top: -5px;
+  width: 95%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  cursor: n-resize;
+}
+.resizer.e{
+  right: -5px;
+  height: 95%;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  cursor: e-resize;
+}
+.resizer.s{
+  bottom: -5px;
+  width: 95%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  cursor: s-resize;
+}
+.resizer.w{
+  left: -5px;
+  height: 95%;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  cursor: w-resize;
+}
+.resizer.nw{
+  top: -5px;
+  left: -5px;
+  cursor: nw-resize;
+}
+.resizer.sw{
+  bottom: -5px;
+  left: -5px;
+  cursor: sw-resize;
+}
+.resizer.se{
+  bottom: -5px;
+  right: -5px;
+  cursor: se-resize;
+}
+.resizer.ne{
+  top: -5px;
+  right: -5px;
+  cursor: ne-resize;
 }
