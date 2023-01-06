@@ -100,9 +100,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
             widthLimiter = 320;
 
           if(value == "top"){
-            element.style.top = ((dynamicValue.height > heightLimiter) ? notNegative(e.clientY) : rect.bottom - heightLimiter )+ "px" ;
+            element.style.top =
+              dynamicValue.hegitight > heightLimiter
+                ? notNegative(e.clientY) + "px"
+                : rect.bottom - heightLimiter + "px";
           }else if( value == "left"){
-            element.style.left = ((dynamicValue.width > widthLimiter) ? notNegative(e.clientX) : rect.right - widthLimiter ) + "px" ;
+            element.style.left =
+              dynamicValue.width > widthLimiter
+                ? notNegative(e.clientX) + "px"
+                : rect.right - widthLimiter + "px";
           }
         }
         calculator.style.height = controlMinSize(dynamicValue.height, 500) + "px";
