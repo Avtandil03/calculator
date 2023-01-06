@@ -26,7 +26,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
       document.body.addEventListener("mousemove", mousemove);
     }      
     function mousemove(e) {
-      console.log(rect.right)
       if(isDown){
       calculator.style.left = notNegative((e.clientX - overflow.x)) + "px";
       calculator.style.top = notNegative((e.clientY - overflow.y)) + "px";
@@ -39,13 +38,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
       window.removeEventListener("mouseup", mouseup);
       isDown = false;
     }
+  }
 
     function notNegative(number){
       if(number < 0)number = 0; 
       return number;      
     }
-  }
-
 
   /* resizin */
 
@@ -63,7 +61,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         switch (currentResizer.className) {          
           case "resizer n":
             dynamicValue.height = rect.bottom - e.clientY ;
-            calculator.style.top = ((dynamicValue.height > 500) ? e.clientY : rect.top )+ "px" ;
+            setPos(calculator , "top"); 
             break;
           case "resizer e":
             dynamicValue.width = e.clientX - rect.left ;
@@ -73,33 +71,47 @@ document.addEventListener("DOMContentLoaded", (event) => {
             break;
           case "resizer w":
             dynamicValue.width = rect.right - e.clientX ;
-            calculator.style.left = ((dynamicValue.width > 320) ? e.clientX : rect.left ) + "px" ;
+            setPos(calculator , "top"); 
+            setPos(calculator,"left"); ;
             break;
           case "resizer nw":
             dynamicValue.width = rect.right - e.clientX ;
             dynamicValue.height = rect.bottom - e.clientY ;
-            calculator.style.left = ((dynamicValue.width > 320) ? e.clientX : rect.left ) + "px" ;
-            calculator.style.top = ((dynamicValue.height > 500) ? e.clientY : rect.top )+ "px" ;
+            setPos(calculator , "top"); 
+            setPos(calculator,"left"); 
             break;
           case "resizer sw":
             dynamicValue.width = rect.right - e.clientX ;
             dynamicValue.height = e.clientY - rect.y ;
-            calculator.style.left = ((dynamicValue.width > 320) ? e.clientX : rect.left ) + "px" ;
+            setPos(calculator,"left"); ;
             break;
           case "resizer se":
             dynamicValue.width = e.clientX - rect.left ;
             dynamicValue.height = e.clientY - rect.top ;
-            calculator.style.left = ((dynamicValue.width > 320) ? e.clientX : rect.left ) + "px" ;
             break;
           case "resizer ne":
             dynamicValue.width = e.clientX - rect.left ;
             dynamicValue.height = rect.bottom - e.clientY ;
-            calculator.style.top = ((dynamicValue.height > 500) ? e.clientY : rect.top )+ "px" ;
+            setPos(calculator , "top"); 
             break;
         }
-
+        function setPos(element , value ){
+          
+          if(value == "top"){
+            element.style.top = ((dynamicValue.height > 500) ? e.clientY : rect.top )+ "px" ;
+          }else if( value == "left"){
+            element.style.left = ((dynamicValue.width > 320) ? e.clientX : rect.left ) + "px" ;
+          }
+        }
         calculator.style.height = controlMinSize(dynamicValue.height, 500) + "px";
         calculator.style.width = controlMinSize(dynamicValue.width, 320) + "px"; 
+
+
+
+
+       
+        
+        
       }
 
       function controlMinSize(size, minSize ){
