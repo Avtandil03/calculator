@@ -96,22 +96,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
             break;
         }
         function setPos(element , value ){
-          
+          const heightLimiter = 500,
+            widthLimiter = 320;
+
           if(value == "top"){
-            element.style.top = ((dynamicValue.height > 500) ? e.clientY : rect.top )+ "px" ;
+            element.style.top = ((dynamicValue.height > heightLimiter) ? e.clientY : rect.top )+ "px" ;
           }else if( value == "left"){
-            element.style.left = ((dynamicValue.width > 320) ? e.clientX : rect.left ) + "px" ;
+            element.style.left = ((dynamicValue.width > widthLimiter) ? e.clientX : rect.left ) + "px" ;
           }
         }
         calculator.style.height = controlMinSize(dynamicValue.height, 500) + "px";
-        calculator.style.width = controlMinSize(dynamicValue.width, 320) + "px"; 
-
-
-
-
-       
-        
-        
+        calculator.style.width = controlMinSize(dynamicValue.width, 320) + "px";    
+    
       }
 
       function controlMinSize(size, minSize ){
