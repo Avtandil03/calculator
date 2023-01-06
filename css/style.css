@@ -378,15 +378,15 @@ display: flex;
   z-index: 2;
 }
 .resizer.n{
-  top: -5px;
-  width: 95%;
+  top: -3px;
+  width: 97%;
   left: 0;
   right: 0;
   margin: auto;
   cursor: n-resize;
 }
 .resizer.e{
-  right: -5px;
+  right: -3px;
   height: 95%;
   top: 0;
   bottom: 0;
@@ -394,7 +394,7 @@ display: flex;
   cursor: e-resize;
 }
 .resizer.s{
-  bottom: -5px;
+  bottom: -3px;
   width: 95%;
   left: 0;
   right: 0;
@@ -402,7 +402,7 @@ display: flex;
   cursor: s-resize;
 }
 .resizer.w{
-  left: -5px;
+  left: -3px;
   height: 95%;
   top: 0;
   bottom: 0;
@@ -410,22 +410,22 @@ display: flex;
   cursor: w-resize;
 }
 .resizer.nw{
-  top: -5px;
-  left: -5px;
+  top: -3px;
+  left: -3px;
   cursor: nw-resize;
 }
 .resizer.sw{
-  bottom: -5px;
-  left: -5px;
+  bottom: -3px;
+  left: -3px;
   cursor: sw-resize;
 }
 .resizer.se{
-  bottom: -5px;
-  right: -5px;
+  bottom: -3px;
+  right: -3px;
   cursor: se-resize;
 }
 .resizer.ne{
-  top: -5px;
-  right: -5px;
+  top: -3px;
+  right: -3px;
   cursor: ne-resize;
 }
