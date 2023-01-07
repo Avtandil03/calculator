@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
           if(value == "top"){
             element.style.top =
-              dynamicValue.hegitight > heightLimiter
+              dynamicValue.height > heightLimiter
                 ? notNegative(e.clientY) + "px"
                 : rect.bottom - heightLimiter + "px";
           }else if( value == "left"){
