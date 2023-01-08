@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   for(let resizer of resizers){
 
-    resizer.addEventListener("mousedown", ()=>{
+    resizer.addEventListener("mousedown", (e)=>{
       let  currentResizer = e.target;
 
       window.addEventListener("mousemove" , mousemove);
