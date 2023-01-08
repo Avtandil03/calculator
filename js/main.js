@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", (event) => {
+document.addEventListener("DOMContentLoaded", () => {
 
   const calculator = document.querySelector(".calculator"),
   systemMenu = document.querySelector(".calculator__sysMenu"),
@@ -7,11 +7,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
   closeBtn = systemMenu.querySelector(".closeBtn"),
   calcBtnOnBottom = document.querySelector(".calculatorIcon"),
   calcBtnOnstyle = document.querySelector(".calulatorIcon__bottom"),
-  resizers = document.querySelectorAll(".resizer");
+  resizers = document.querySelectorAll(".resizer"),
+  modeMenuBtn = document.querySelector(".header__menuBtn"),
+  modeMenu = document.querySelector(".modeMenu");
 
+  // 
+  const minWidth = 320 ,
+    minHeight = 500;
 
   /* Перетаскивание калькулятора мышкой */
-
 
   systemMenu.addEventListener("mousedown", mousedown);
   function mousedown(e){
@@ -40,17 +44,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   }
 
-    function notNegative(number){
-      if(number < 0)number = 0; 
-      return number;      
-    }
+  function notNegative(value) {
+    if (value < 0) value = 0;
+    return value;
+  }
 
   /* resizin */
 
   for(let resizer of resizers){
 
-    resizer.addEventListener("mousedown", mousedouwn );
-    function mousedouwn(e) {
+    resizer.addEventListener("mousedown", ()=>{
       let  currentResizer = e.target;
 
       window.addEventListener("mousemove" , mousemove);
@@ -95,25 +98,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
             setPos(calculator , "top"); 
             break;
         }
-        function setPos(element , value ){
-          const heightLimiter = 500,
-            widthLimiter = 320;
-
-          if(value == "top"){
+        function setPos(element, value) {
+          if (value == "top") {
             element.style.top =
-              dynamicValue.height > heightLimiter
+              dynamicValue.height > minHeight
                 ? notNegative(e.clientY) + "px"
-                : rect.bottom - heightLimiter + "px";
-          }else if( value == "left"){
+                : rect.bottom - minHeight + "px";
+          } else if (value == "left") {
             element.style.left =
-              dynamicValue.width > widthLimiter
+              dynamicValue.width > minWidth
                 ? notNegative(e.clientX) + "px"
-                : rect.right - widthLimiter + "px";
+                : rect.right - minWidth + "px";
           }
         }
-        calculator.style.height = controlMinSize(dynamicValue.height, 500) + "px";
-        calculator.style.width = controlMinSize(dynamicValue.width, 320) + "px";    
-    
+        calculator.style.height = controlMinSize(dynamicValue.height, minHeight) + "px";
+        calculator.style.width = controlMinSize(dynamicValue.width, minWidth) + "px";    
       }
 
       function controlMinSize(size, minSize ){
@@ -129,8 +128,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);
       }
-    }
+    } );
   }
+
+  /* modeMenu */
+
+  
+  modeMenuBtn.addEventListener("mouseup", (e) => {
+    if(e.target == modeMenuBtn) modeMenu.classList.toggle("hide");
+    
+  });
+  
+
 
   /* animation bottomModal */
   calcBtnOnBottom.addEventListener("mouseenter",(e)=>{
@@ -185,7 +194,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   },true)
 
-  /* make calculator resizible */
 
 
 
