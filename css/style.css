@@ -506,6 +506,7 @@ display: flex;
   outline: solid 1px var(--border-color) ;
   display: flex;
   flex-direction: column;
+  transition: 200ms;
 }
 
 .modeMenu.hide {
@@ -572,4 +573,5 @@ display: flex;
   flex: 0 0 54px;
   outline: solid 1px var(--border-color);
   justify-content: center;
+  overflow: hidden;
 }
