@@ -132,11 +132,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* modeMenu */
-
   
-  modeMenuBtn.addEventListener("mouseup", (e) => {
+  modeMenuBtn.addEventListener("click", (e) => {
     if(e.target == modeMenuBtn) modeMenu.classList.toggle("hide");
-    
   });
   
 

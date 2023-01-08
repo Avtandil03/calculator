@@ -66,6 +66,9 @@ h1,h2,h3,h4,h5,h6{font-size: inherit;font-weight: 400;}
   --main-fontFamily:sans-serif;
   --border-color:rgba(80, 80, 80, 0.5);
   --modal-background:#2d2d2d;
+  --button-hover-color: #3b3b3b;
+  --button-background-color: #323232;
+  --indicator-background: #76b9ed;
 }
 
 
@@ -136,7 +139,7 @@ display: flex;
   background-color: var( --main-background)
 }
 .calculator__sysBtns button:hover{
-  background-color:#363636;
+  background-color:var(--button-hover-color);
 }
 .calculator__sysBtns .closeBtn:hover{
   background-color:#e81123;
@@ -204,10 +207,11 @@ display: flex;
   border-radius: 5px;
 }
 .header button:hover , .memoryBtn:hover {
-  background-color:#363636
+  background-color:var(--button-hover-color)
 }
 .header button:active ,.memoryBtn:active{
-  background-color:#292929
+  /* background-color:#292929 */
+  opacity: 70%;
 }
 
 .header__menuBtn{
@@ -315,33 +319,33 @@ display: flex;
   background-color:transparent;
 }
 .main__buttons button:active {
- opacity: 50%;
+ opacity: 70%;
 }
 .func__button { 
-  background-color: #323232;
+  background-color: var(--button-background-color);
 }
 #dividedBy1Btn, #degreeBtn, #squareRootBtn{
   font-family: "math";
   font-style: italic;
 }
 .operatorBtn{
-  background-color: #323232;
+  background-color: var(--button-background-color);
   font-size: 20px;
   font-family: "math";
 }
 .func__button:hover  , .operatorBtn:hover{
-  background-color: #3b3b3b
+  background-color: var(--button-hover-color)
 }
 .numberBtn {
-  background-color:#3b3b3b ;
+  background-color:var(--button-hover-color) ;
   font-size: 18px;
 }
 .numberBtn:hover{
-  background-color:#323232;
+  background-color:var(--button-background-color);
 }
 #equalBtn{
-  background-color: #76b9ed;
-  color: #323232;
+  background-color: var(--indicator-background);
+  color: var(--subText-color);
   font-size: 20px;
 }
 #equalBtn:hover{
@@ -373,7 +377,7 @@ display: flex;
   display: block;
   width: 100%;
   height: 2px;
-  background-color:#76b9ed;
+  background-color:var(--indicator-background);
   transition: 200ms;
 }
 
@@ -548,16 +552,16 @@ display: flex;
   border-radius:5px;
 }
 .modeMenu li:hover{
-  background-color:#363636 !important;
+  background-color:var(--button-hover-color) !important;
 }
 .modeMenu__modes li.active{
-  background-color: #3a3a3a;
+  background-color: var(--button-hover-color);
 }
 .modeMenu__modes li.active::before{
   content:"";
   width: 3px;
   height: 16px;
-  background-color:#76b9ed;
+  background-color:var(--indicator-background);
   border-radius:2px;
 }
 .modeMenu .icon{
