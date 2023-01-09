@@ -13,17 +13,88 @@
 
 <body>
   <section class="calculator">
-    <div class="resizer n"></div>
-    <div class="resizer e"></div>
-    <div class="resizer s"></div>
-    <div class="resizer w"></div>
-    <div class="resizer nw"></div>
-    <div class="resizer sw"></div>
-    <div class="resizer se"></div>
-    <div class="resizer ne"></div>
-    <div class="modeMenuWrapper">
+    
+    <div class="calculator__topContainer">
+      <section class="calculator__sysMenu">
+        <div style="display: flex;">
+          <img class="calculator__icon" src="img/IconSysMenu.png" alt="IconSysMenu.png" class="icon">
+          <span class="calculator__name">Calculator</span>
+        </div>
+        <div class="calculator__sysBtns">
+          <button class="hideBtn"></button>
+          <button class="minimizeBtn"></button>
+          <button class="closeBtn"></button>
+        </div>
+      </section>
+    
     </div>
-    <div class="modeMenu hide">
+    
+    <div class="calculator__bottomContainer">
+      <div class="calculator__leftContainer">
+        <header class="header">
+          <div>
+            <button class="header__menuBtn"></button>
+            <span class="header__title">Standard</span>
+            <button class="header__onTopOtherBtn">
+              <img src="img/onTopOtherBtn.png" alt="onTopOtherBtn.png" class="icon">
+            </button>
+          </div>
+          <button class="header__journalBtn">
+            <img src="img/journalBtn.png" alt="journalBtn.png" class="icon">
+          </button>
+        </header>
+    
+        <section class="screens">
+          <div class="screen__last">3533423425</div>
+          <div class="screen__current">3,522423425</div>
+        </section>
+        <section class="calculator__buttons">
+          <div class="memory__buttons">
+            <button class="memoryBtn" id="clearMemory">MC</button>
+            <button class="memoryBtn" id="callFromMemory">MR</button>
+            <button class="memoryBtn" id="addMemory">M+</button>
+            <button class="memoryBtn" id="subMemory">M-</button>
+            <button class="memoryBtn" id="saveMemory">MS</button>
+            <button class="memoryBtn" id="openMemory">M<span>></span></button>
+          </div>
+          <div class="main__buttons">
+            <button class="func__button" id="percentBtn">%</button>
+            <button class="func__button" id="clearInputBtn">CE</button>
+            <button class="func__button" id="clearAllBtn">C</button>
+            <button class="func__button" id="backspaceBtn">⌫</button>
+    
+            <button class="func__button" id="dividedBy1Btn"><sup>1</sup>/x</button>
+            <button class="func__button" id="degreeBtn">x<sup>2</sup></button>
+            <button class="func__button" id="squareRootBtn"><sup>2</sup>√x</button>
+            <button class="operatorBtn" data-operator>÷</button>
+    
+            <button class="numberBtn" data-number>7</button>
+            <button class="numberBtn" data-number>9</button>
+            <button class="numberBtn" data-number>8</button>
+            <button class="operatorBtn" data-operator>×</button>
+    
+            <button class="numberBtn" data-number>4</button>
+            <button class="numberBtn" data-number>5</button>
+            <button class="numberBtn" data-number>6</button>
+            <button class="operatorBtn" data-operator>-</button>
+    
+            <button class="numberBtn" data-number>1</button>
+            <button class="numberBtn" data-number>2</button>
+            <button class="numberBtn" data-number>3</button>
+            <button class="operatorBtn" data-operator>+</button>
+    
+            <button class="numberBtn"><sup>+</sup>/<span>-</span></button>
+            <button class="numberBtn" data-number>0</button>
+            <button class="numberBtn">,</button>
+            <button class="func__button" id="equalBtn">=</button>
+          </div>
+        </section>
+      </div>    
+      <div class="calculator__rightContainer hidden">    
+      </div>
+      <div class="modalCloser hidden"></div>
+    </div>
+    <div class="modeMenu hidden">
       <div class="modeMenu__modes">
         <ul class="calculatorModes">
           <p class="title">Calculator</p>
@@ -99,92 +170,26 @@
             <p class="modeName">Pressure</p>
           </li>
           <li>
-            <img src="img/icon/Angle.svg" alt="Angle.svg" class="icon" >
+            <img src="img/icon/Angle.svg" alt="Angle.svg" class="icon">
             <p class="modeName">Angle</p>
           </li>
         </ul>
       </div>
       <div class="modeMenu__setting">
         <li class="setting">
-          <img src="img/icon/Settings.svg" alt="Settings.svg" class="icon" >
+          <img src="img/icon/Settings.svg" alt="Settings.svg" class="icon">
           <p class="modeName">Settings</p>
         </li>
       </div>
     </div>
-    <div class="calculator__topContainer">
-      <section class="calculator__sysMenu">
-        <div style="display: flex;">
-          <img class="calculator__icon" src="img/IconSysMenu.png" alt="IconSysMenu.png" class="icon">
-          <span class="calculator__name">Calculator</span>
-        </div>
-        <div class="calculator__sysBtns">
-          <button class="hideBtn"></button>
-          <button class="minimizeBtn"></button>
-          <button class="closeBtn"></button>
-        </div>
-      </section>
-
-      <header class="header">
-        <div>
-          <button class="header__menuBtn"></button>
-          <span class="header__title">Standard</span>
-          <button class="header__onTopOtherBtn">
-            <img src="img/onTopOtherBtn.png" alt="onTopOtherBtn.png" class="icon">
-          </button>
-        </div>
-        <button class="header__journalBtn">
-          <img src="img/journalBtn.png" alt="journalBtn.png" class="icon">
-        </button>
-      </header>
-    </div>
-
-    <div class="calculator__bottomContainer">
-      <section class="screens">
-        <div class="screen__last">3533423425</div>
-        <div class="screen__current">3,522423425</div>
-      </section>
-      <section class="calculator__buttons">
-        <div class="memory__buttons">
-          <button class="memoryBtn" id="clearMemory">MC</button>
-          <button class="memoryBtn" id="callFromMemory">MR</button>
-          <button class="memoryBtn" id="addMemory">M+</button>
-          <button class="memoryBtn" id="subMemory">M-</button>
-          <button class="memoryBtn" id="saveMemory">MS</button>
-          <button class="memoryBtn" id="openMemory">M<span>></span></button>
-        </div>
-        <div class="main__buttons">
-          <button class="func__button" id="percentBtn">%</button>
-          <button class="func__button" id="clearInputBtn">CE</button>
-          <button class="func__button" id="clearAllBtn">C</button>
-          <button class="func__button" id="backspaceBtn">⌫</button>
-
-          <button class="func__button" id="dividedBy1Btn"><sup>1</sup>/x</button>
-          <button class="func__button" id="degreeBtn">x<sup>2</sup></button>
-          <button class="func__button" id="squareRootBtn"><sup>2</sup>√x</button>
-          <button class="operatorBtn" data-operator>÷</button>
-
-          <button class="numberBtn" data-number>7</button>
-          <button class="numberBtn" data-number>9</button>
-          <button class="numberBtn" data-number>8</button>
-          <button class="operatorBtn" data-operator>×</button>
-
-          <button class="numberBtn" data-number>4</button>
-          <button class="numberBtn" data-number>5</button>
-          <button class="numberBtn" data-number>6</button>
-          <button class="operatorBtn" data-operator>-</button>
-
-          <button class="numberBtn" data-number>1</button>
-          <button class="numberBtn" data-number>2</button>
-          <button class="numberBtn" data-number>3</button>
-          <button class="operatorBtn" data-operator>+</button>
-
-          <button class="numberBtn"><sup>+</sup>/<span>-</span></button>
-          <button class="numberBtn" data-number>0</button>
-          <button class="numberBtn">,</button>
-          <button class="func__button" id="equalBtn">=</button>
-        </div>
-      </section>
-    </div>
+    <div class="resizer n"></div>
+    <div class="resizer e"></div>
+    <div class="resizer s"></div>
+    <div class="resizer w"></div>
+    <div class="resizer nw"></div>
+    <div class="resizer sw"></div>
+    <div class="resizer se"></div>
+    <div class="resizer ne"></div>
   </section>
   <div class="bottomModal">
 
