@@ -5,17 +5,23 @@ document.addEventListener("DOMContentLoaded", () => {
   hideBtn = systemMenu.querySelector(".hideBtn"),
   minimizeBtn = systemMenu.querySelector(".minimizeBtn"),
   closeBtn = systemMenu.querySelector(".closeBtn"),
+  modeMenuBtn = document.querySelector(".header__menuBtn"),
+  onTopOtherBtn = document.querySelector(".header__onTopOtherBtn"),
+  journalBtn = document.querySelector(".header__journalBtn"),
+  mainBtns = document.querySelector(".main__buttons"),
   calcBtnOnBottom = document.querySelector(".calculatorIcon"),
   calcBtnOnstyle = document.querySelector(".calulatorIcon__bottom"),
+  modalCloser = document.querySelector(".modalCloser"),
+  modeMenu = document.querySelector(".modeMenu"),
   resizers = document.querySelectorAll(".resizer"),
-  modeMenuBtn = document.querySelector(".header__menuBtn"),
-  modeMenu = document.querySelector(".modeMenu");
+  leftContainer = document.querySelector(".calculator__leftContainer"),
+  rightContainer = document.querySelector(".calculator__rightContainer");
 
   // 
   const minWidth = 320 ,
     minHeight = 500;
 
-  /* Перетаскивание калькулятора мышкой */
+  /* drag&drop calculator */
 
   systemMenu.addEventListener("mousedown", mousedown);
   function mousedown(e){
@@ -49,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return value;
   }
 
-  /* resizin */
+  /* resizing */
 
   for(let resizer of resizers){
 
@@ -112,7 +118,9 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
         calculator.style.height = controlMinSize(dynamicValue.height, minHeight) + "px";
-        calculator.style.width = controlMinSize(dynamicValue.width, minWidth) + "px";    
+        calculator.style.width = controlMinSize(dynamicValue.width, minWidth) + "px"; 
+        displayRightContainer(controlMinSize(dynamicValue.width, minWidth));
+        
       }
 
       function controlMinSize(size, minSize ){
@@ -131,13 +139,54 @@ document.addEventListener("DOMContentLoaded", () => {
     } );
   }
 
-  /* modeMenu */
   
-  modeMenuBtn.addEventListener("click", (e) => {
-    if(e.target == modeMenuBtn) modeMenu.classList.toggle("hide");
+  calculator.addEventListener("click", (e) => {
+
+    switch (e.target) {
+      case modeMenuBtn:
+        modeMenu.classList.toggle("hidden");
+        modalCloser.classList.toggle("hidden");
+        modeMenuBtn.classList.toggle("float");
+        break;
+      case hideBtn:
+          calculator.classList.add("hidden");
+          calcBtnOnstyle.style.width = "87%";
+          calcBtnOnBottom.style = "background-color:transparent";
+          transitionRegulator(calculator,200);
+        break;
+      case closeBtn:
+        calcBtnOnstyle.style.display = "none";
+        calcBtnOnBottom.style = "background-color:transparent"
+        calculator.classList.add("closed");
+        transitionRegulator(calculator, 200);
+        break  
+      case modalCloser: 
+        modalCloser.classList.add("hidden");
+        rightContainer.classList.remove("show")
+        modeMenu.classList.add("hidden");
+    }
   });
   
+  /* history-memory modal */
 
+  function displayRightContainer(width){
+    if(width < minWidth + 245){
+      rightContainer.classList.add("hidden");      
+      journalBtn.style.display = "block";
+    }else{      
+      journalBtn.style.display = "none";
+      leftContainer.after(rightContainer);
+      rightContainer.classList.remove("hidden");
+      rightContainer.classList.remove("show");
+    }
+  }
+
+  journalBtn.addEventListener("click", function(){
+    mainBtns.append(rightContainer);
+    rightContainer.classList.remove("hidden")
+    modalCloser.classList.toggle("hidden");
+    rightContainer.classList.toggle("show");
+  })
 
   /* animation bottomModal */
   calcBtnOnBottom.addEventListener("mouseenter",(e)=>{
@@ -149,17 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   },true)
 
-
-
-  /* hide calculator */
-
-  hideBtn.addEventListener("click", function(){
-    calculator.classList.add("hidden");
-    calcBtnOnstyle.style.width = "87%";
-    calcBtnOnBottom.style = "background-color:transparent";
-    transitionRegulator(calculator,200);
-  },true)
-
+  /* animation calcBtnOnBottom */
   calcBtnOnBottom.addEventListener("click", function(){
     calcBtnOnstyle.style.display = "block"; 
     if(calculator.classList.contains("closed")){
@@ -173,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (calculator.classList.contains("hidden")) {
         calcBtnOnBottom.style = "background-color:transparent";
     }
-    transitionRegulator(calculator,200);  
+    transitionRegulator(calculator,200); 
   })
     
   function transitionRegulator(element, delay){
@@ -182,28 +221,5 @@ document.addEventListener("DOMContentLoaded", () => {
       element.style.transition = `0ms`;
     }, delay);
   }
-
-  /* close calculator */
-  closeBtn.addEventListener("click", function(){
-    calcBtnOnstyle.style.display = "none";
-    calcBtnOnBottom.style = "background-color:transparent"
-    calculator.classList.add("closed");
-    transitionRegulator(calculator, 200);
-
-  },true)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 });
