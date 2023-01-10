@@ -468,7 +468,6 @@ display: flex;
   min-height: 62px;
   width: 100%;
   border-radius: 5px;
-  background-color:var(--button-background-color);
   text-align: end;
 }
 .journalWrapper:hover{
