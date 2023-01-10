@@ -69,6 +69,7 @@ h1,h2,h3,h4,h5,h6{font-size: inherit;font-weight: 400;}
   --button-hover-color: #3b3b3b;
   --button-background-color: #323232;
   --indicator-background: #76b9ed;
+  --currentScreenFontSize: 46px;
 }
 
 
@@ -88,12 +89,19 @@ img{
 }
 
 /* calculator */
+
 .calculator{
   background-color: var(--main-background);
   width: 320px; 
   height: 507px;
   outline: solid 1px var(--border-color) ;
   position: absolute;
+}
+.calculator.maximized{
+  width: 100% !important;
+  height: calc(100% - 40px) !important;
+  top: 0px !important;
+  left: 0px !important;
 }
 .calculator.hidden{
   left: -50px !important;
@@ -133,7 +141,7 @@ height: 100%;
 display: flex;
 }
 .calculator__sysBtns button{
-  height: 100%;
+  height: 32px;
   width: 46px;
   border-radius: 0;
   border:none;
@@ -173,6 +181,17 @@ display: flex;
   height: 9px;
   border: solid 1px #fff;
   background-color: transparent;
+}
+.minimizeBtn.maximized::after{
+  content:"";  
+  background-color:#fff;
+  display: block;
+  margin: auto;
+  width: 8px;
+  height: 8px;
+  border: solid 1px #fff;
+  background-color: transparent;
+  box-shadow: 1px -1px var(--main-background), 2px -2px #fff;
 }
  .closeBtn::after, .closeBtn::before {
   content:"";  
@@ -225,6 +244,9 @@ display: flex;
   height: 32px;
   width: 32px;
   border-radius: 5px;
+}
+.header__onTopOtherBtn.active .icon{
+  content : url("../img/icon/onTopOtherBtnActive.svg")
 }
 .header button:hover , 
 .memoryBtn:hover, 
@@ -287,7 +309,7 @@ display: flex;
 .screen__current{
   margin-top: 13px;
   margin-right: 13px;
-  font-size: 46px;
+  font-size: var(--currentScreenFontSize);
   user-select: text;
 }
 
