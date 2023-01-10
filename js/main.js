@@ -8,7 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
   modeMenuBtn = document.querySelector(".header__menuBtn"),
   onTopOtherBtn = document.querySelector(".header__onTopOtherBtn"),
   journalBtn = document.querySelector(".header__journalBtn"),
-  mainBtns = document.querySelector(".main__buttons"),
+  memoryBtns = document.querySelectorAll(".memoryBtn"),
+  memoryJournalBtn = document.querySelector("#memoryJournalBtn"),
+  historyJournal = document.querySelector(".historyJournal"),
+  memoryJournal = document.querySelector(".memoryJournal"),
+  modeHistory = document.querySelector(".modeHistory"),
+  modeMemory = document.querySelector(".modeMemory"),
+  mainBtnsWrapper = document.querySelector(".main__buttons"),
   calcBtnOnBottom = document.querySelector(".calculatorIcon"),
   calcBtnOnstyle = document.querySelector(".calulatorIcon__bottom"),
   modalCloser = document.querySelector(".modalCloser"),
@@ -119,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         calculator.style.height = controlMinSize(dynamicValue.height, minHeight) + "px";
         calculator.style.width = controlMinSize(dynamicValue.width, minWidth) + "px"; 
-        displayRightContainer(controlMinSize(dynamicValue.width, minWidth));
+        if(dynamicValue.width) displayRightContainer(controlMinSize(dynamicValue.width, minWidth));
         
       }
 
@@ -162,31 +168,67 @@ document.addEventListener("DOMContentLoaded", () => {
         break  
       case modalCloser: 
         modalCloser.classList.add("hidden");
-        rightContainer.classList.remove("show")
+        rightContainer.classList.remove("show");        
+        rightContainer.classList.add("hidden");
         modeMenu.classList.add("hidden");
+
     }
   });
   
   /* history-memory modal */
 
-  function displayRightContainer(width){
-    if(width < minWidth + 245){
+  function displayRightContainer(width = 320){
+    if(width <= (minWidth + 245)){
       rightContainer.classList.add("hidden");      
-      journalBtn.style.display = "block";
-    }else{      
+      journalBtn.style.display = "block";      
+      memoryJournalBtn.style.display = "block";
+    }else {      
       journalBtn.style.display = "none";
       leftContainer.after(rightContainer);
       rightContainer.classList.remove("hidden");
       rightContainer.classList.remove("show");
+      modalCloser.classList.add("hidden");
+      memoryJournalBtn.style.display = "none";
+      turnHistoryModes();
     }
   }
 
   journalBtn.addEventListener("click", function(){
-    mainBtns.append(rightContainer);
+    openRightContainer();
+    turnHistoryModes();
+  })
+  memoryJournalBtn.addEventListener("click", function(){
+    openRightContainer();
+    turnMemoryMode();
+  });
+
+  function openRightContainer(){
+    mainBtnsWrapper.append(rightContainer);
     rightContainer.classList.remove("hidden")
     modalCloser.classList.toggle("hidden");
     rightContainer.classList.toggle("show");
-  })
+  }
+
+  /* history & memory modes */
+
+  modeHistory.addEventListener("click", turnHistoryModes);
+
+  function turnHistoryModes() {
+    turnModes(modeHistory, modeMemory);
+    turnModes(historyJournal, memoryJournal);
+  }
+
+  modeMemory.addEventListener("click", turnMemoryMode);
+
+  function turnMemoryMode(){
+    turnModes(modeMemory, modeHistory);
+    turnModes(memoryJournal, historyJournal);
+  } 
+  function turnModes( turnOnMode , turnOffMode){  
+    turnOnMode.classList.add("active");
+    turnOffMode.classList.remove("active");
+  }
+
 
   /* animation bottomModal */
   calcBtnOnBottom.addEventListener("mouseenter",(e)=>{
