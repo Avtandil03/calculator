@@ -24,8 +24,11 @@ document.addEventListener("DOMContentLoaded", () => {
   rightContainer = document.querySelector(".calculator__rightContainer");
 
   // 
-  const minWidth = 320 ,
-    minHeight = 500;
+  let minWidth = 320 ,
+    minHeight = 500,
+    maxWidth = document.body.clientWidth,
+    maxHeight = document.body.clientHeight;
+
 
   /* drag&drop calculator */
 
@@ -111,28 +114,44 @@ document.addEventListener("DOMContentLoaded", () => {
             break;
         }
         function setPos(element, value) {
-          if (value == "top") {
-            element.style.top =
-              dynamicValue.height > minHeight
-                ? notNegative(e.clientY) + "px"
-                : rect.bottom - minHeight + "px";
-          } else if (value == "left") {
-            element.style.left =
-              dynamicValue.width > minWidth
-                ? notNegative(e.clientX) + "px"
-                : rect.right - minWidth + "px";
+          if (value == "top"){
+            if(dynamicValue.height > minHeight){
+              if( dynamicValue.height > maxHeight){
+                element.style.top = rect.bottom - maxHeight + "px";
+              }else{
+                element.style.top = notNegative(e.clientY) + "px";
+              }
+            }else {
+              element.style.top = rect.bottom - minHeight + "px";
+            }            
+          } else if (value == "left"){
+
+            if(dynamicValue.width > minWidth){
+              if( dynamicValue.width > maxWidth){
+                element.style.left = rect.right - maxWidth + "px";
+              }else{
+                element.style.left = notNegative(e.clientX) + "px"
+              }
+            }else {
+              element.style.left = rect.right - minWidth + "px";
+            } 
           }
         }
-        calculator.style.height = controlMinSize(dynamicValue.height, minHeight) + "px";
-        calculator.style.width = controlMinSize(dynamicValue.width, minWidth) + "px"; 
-        if(dynamicValue.width) displayRightContainer(controlMinSize(dynamicValue.width, minWidth));
+        calculator.style.height = controlMinSize(dynamicValue.height, minHeight, maxHeight) + "px";
+        calculator.style.width = controlMinSize(dynamicValue.width, minWidth, maxWidth) + "px"; 
+        if(dynamicValue.width & !onTopOtherBtn.classList.contains("active")) {
+          displayRightContainer(controlMinSize(dynamicValue.width, minWidth, maxWidth));
+        }
         
       }
 
-      function controlMinSize(size, minSize ){
+      function controlMinSize(size, minSize , maxSize ){
         if(minSize > size ){
           return minSize ;
-        } else{
+        } else if(maxSize < size){
+          return maxSize;
+        }
+        else{
           return size;
         }
       }
@@ -144,8 +163,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } );
   }
+  /* minimizeBtn */
 
-  
+
+  /* calculator events */
   calculator.addEventListener("click", (e) => {
 
     switch (e.target) {
@@ -160,6 +181,12 @@ document.addEventListener("DOMContentLoaded", () => {
           calcBtnOnBottom.style = "background-color:transparent";
           transitionRegulator(calculator,200);
         break;
+      case minimizeBtn:
+        calculator.classList.toggle("maximized");
+        minimizeBtn.classList.toggle("maximized");
+        let rect = calculator.getBoundingClientRect();
+        displayRightContainer(rect.width);
+        break;
       case closeBtn:
         calcBtnOnstyle.style.display = "none";
         calcBtnOnBottom.style = "background-color:transparent"
@@ -171,7 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
         rightContainer.classList.remove("show");        
         rightContainer.classList.add("hidden");
         modeMenu.classList.add("hidden");
-
     }
   });
   
@@ -239,6 +265,34 @@ document.addEventListener("DOMContentLoaded", () => {
       calcBtnOnstyle.style.width = "87%";
     }
   },true)
+
+  /* onTopOthers mode */
+
+  onTopOtherBtn.addEventListener("click", onTopOtherMode);
+  function onTopOtherMode() {
+
+    onTopOtherBtn.classList.toggle("active");
+    if(onTopOtherBtn.classList.contains("active")){      
+      minWidth = 160;
+      minHeight = 160;
+      maxWidth = 500;
+      maxHeight = 500;
+      calculator.style.width = "320px";
+      calculator.style.height = "394px";
+      calculator.style.top = "30px";
+      calculator.style.left = (document.body.clientWidth - 350) + "px";
+      calculator.querySelectorAll(".sysMenu__leftContainer, .hideBtn, .minimizeBtn, .header__menuBtn,  .header__title").forEach((e)=>{
+         e.style = "overflow: hidden; height: 0; "
+      });
+       onTopOtherBtn.style = "position: absolute; left: 2px; top: -30px;";
+    } else{
+      minWidth = 320;
+      minHeight = 500;
+      maxWidth = document.body.clientWidth;
+      maxHeight = document.body.clientHeight;
+    }
+
+  }
 
   /* animation calcBtnOnBottom */
   calcBtnOnBottom.addEventListener("click", function(){
