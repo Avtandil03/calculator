@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
   modeMenuBtn = document.querySelector(".header__menuBtn"),
   onTopOtherBtn = document.querySelector(".header__onTopOtherBtn"),
   journalBtn = document.querySelector(".header__journalBtn"),
+  lastScreen = document.querySelector(".screen__last"),
+  currentScreen = document.querySelector(".screen__current"),
   memoryBtns = document.querySelectorAll(".memoryBtn"),
   memoryJournalBtn = document.querySelector("#memoryJournalBtn"),
   historyJournal = document.querySelector(".historyJournal"),
@@ -142,7 +144,15 @@ document.addEventListener("DOMContentLoaded", () => {
         if(dynamicValue.width & !onTopOtherBtn.classList.contains("active")) {
           displayRightContainer(controlMinSize(dynamicValue.width, minWidth, maxWidth));
         }
+        if(currentScreen.classList.contains("resizingOnHeight")) {
+          currentScreen.style = 
+          `font-size:${scaleY(controlMinSize(dynamicValue.height, minHeight, maxHeight),160,500,18,38)}px;    margin-top: 0 !important; `;
+        }
         
+      }
+
+      function scaleY(x, x1, x2, y1, y2){
+        return (x-x1)*(y2-y1)/(x2-x1)+y1;
       }
 
       function controlMinSize(size, minSize , maxSize ){
@@ -163,7 +173,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } );
   }
-  /* minimizeBtn */
 
 
   /* calculator events */
@@ -281,10 +290,12 @@ document.addEventListener("DOMContentLoaded", () => {
       calculator.style.height = "394px";
       calculator.style.top = "30px";
       calculator.style.left = (document.body.clientWidth - 350) + "px";
-      calculator.querySelectorAll(".sysMenu__leftContainer, .hideBtn, .minimizeBtn, .header__menuBtn,  .header__title").forEach((e)=>{
-         e.style = "overflow: hidden; height: 0; "
+      calculator.querySelectorAll(".sysMenu__leftContainer, .hideBtn, .minimizeBtn, .header, .header__menuBtn,  .header__title, .header__journalBtn, .screen__last, .memory__buttons, #percentBtn, #dividedBy1Btn, #degreeBtn, #squareRootBtn").forEach((e)=>{
+         e.classList.add("immediatelyHide") ;
       });
-       onTopOtherBtn.style = "position: absolute; left: 2px; top: -30px;";
+       currentScreen.style = `font-size: 38px; margin-top: 0; `;
+       currentScreen.classList.add("resizingOnHeight");
+       onTopOtherBtn.style = "position: absolute ; left: 2px ; top: -30px ;";
     } else{
       minWidth = 320;
       minHeight = 500;
@@ -293,6 +304,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
   }
+
+  
 
   /* animation calcBtnOnBottom */
   calcBtnOnBottom.addEventListener("click", function(){

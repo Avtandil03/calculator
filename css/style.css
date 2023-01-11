@@ -53,12 +53,6 @@ h1,h2,h3,h4,h5,h6{font-size: inherit;font-weight: 400;}
   src: url("../img/icon/CalculatorIcons.ttf");
 }
 
-.icon {
-  max-width: 16px;
-  height: 16px;
-  background-color:transparent;
-}
-
 :root{
   --text-color:#fff;
   --subText-color: #808080;
@@ -88,6 +82,18 @@ img{
   background-color:transparent;
 }
 
+.icon {
+  max-width: 16px;
+  height: 16px;
+  background-color:transparent;
+}
+
+.immediatelyHide{
+  overflow: hidden !important;
+  height: 0 !important;
+  width: 0 !important;
+  display: none ;
+}
 /* calculator */
 
 .calculator{
@@ -217,7 +223,6 @@ display: flex;
 }
 
 .calculator__leftContainer{
-  min-width: 320px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -261,8 +266,8 @@ display: flex;
 }
 
 .header__menuBtn{
-  width: 40px!important;
-  height: 36px!important;
+  width: 40px;
+  height: 36px;
   margin-left: 4px;
   display:inline-block;
   position: relative;
@@ -315,6 +320,7 @@ display: flex;
 
 /* buttons */
 .calculator__buttons{
+  justify-content: space-between;
   display: flex;
   height: 76%;
   flex-direction: column;
@@ -347,6 +353,7 @@ display: flex;
 
 .main__buttons{
   display: flex;
+  flex: 1 0 91%;
   flex-wrap: wrap;
   height: 91%;
   justify-content: center;
@@ -355,7 +362,6 @@ display: flex;
 .main__buttons button {
   text-align: center  ;
   margin: 1px;
-  height: calc((100% - 12px) / 6 );
   width: calc(25% - 2px);
   border-radius: 5px;
 }
