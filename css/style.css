@@ -60,10 +60,11 @@ h1,h2,h3,h4,h5,h6{font-size: inherit;font-weight: 400;}
   --main-fontFamily:sans-serif;
   --border-color:rgba(80, 80, 80, 0.5);
   --modal-background:#2d2d2d;
-  --button-hover-color: #3b3b3b;
-  --button-background-color: #323232;
+  --button-hover-color: rgb(59, 59, 59);
+  --button-background-color: #333333;
   --indicator-background: #76b9ed;
   --currentScreenFontSize: 46px;
+
 }
 
 
@@ -87,7 +88,10 @@ img{
   height: 16px;
   background-color:transparent;
 }
-
+.notActiveBtn{
+  opacity: 0.3 !important;
+  pointer-events: none;
+}
 .immediatelyHide{
   overflow: hidden !important;
   height: 0 !important;
@@ -261,8 +265,7 @@ display: flex;
 }
 .header button:active ,
 .memoryBtn:active, 
-.deleteBtn:active,
-.journalWrapper:active{
+.deleteBtn:active{
   opacity: 70%;
 }
 
@@ -330,7 +333,7 @@ display: flex;
 .calculator__buttons{
   justify-content: space-between;
   display: flex;
-  height: 76%;
+  flex: 1 1 69%;
   flex-direction: column;
   margin: 3px;
 }
@@ -505,6 +508,25 @@ display: flex;
   width: 100%;
   border-radius: 5px;
   text-align: end;
+}
+.memoryJournal .journalWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-end;
+  font-size: 18px;
+  padding: 4px;
+}
+.memoryJournal .journalWrapper .memoryBtns{
+  visibility:hidden;
+}
+.memoryJournal .journalWrapper:hover .memoryBtns{
+  visibility:visible;
+}
+.memoryJournal .journalWrapper .memoryBtn {
+  background-color: var(--button-hover-color);
+  height: 28px;
+  width: 36px;
+  border: solid 1px var(--border-color);
 }
 .journalWrapper:hover{
   background-color: var(--button-background-color)

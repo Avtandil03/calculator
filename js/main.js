@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   leftContainer = document.querySelector(".calculator__leftContainer"),
   rightContainer = document.querySelector(".calculator__rightContainer");
 
+
   // 
   let minWidth = 320 ,
     minHeight = 500,
@@ -145,6 +146,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if(currentScreen.classList.contains("resizingOnHeight")) {
           onTopStylesSet();
+        }else{
+          calculator.querySelectorAll("#percentBtn, #dividedBy1Btn, #degreeBtn, #squareRootBtn").forEach((e)=>{
+            e.classList.remove("immediatelyHide") ;
+          });
         }
         
       }
@@ -297,7 +302,6 @@ document.addEventListener("DOMContentLoaded", () => {
         calculator.style.left = (document.body.clientWidth - 350) + "px";
         prevois.firstValue = true;
       }
-
       rightContainer.classList.add("hidden");
       changingElements.forEach((e)=>{
          e.classList.add("immediatelyHide") ;
