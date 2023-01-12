@@ -302,6 +302,9 @@ display: flex;
 /* screes */
 
 .screens{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   height: 20%;
   width: 100%;
   text-align: end;
@@ -315,7 +318,6 @@ display: flex;
 .screen__current{
   overflow-x: scroll;
   overflow-y: hidden;
-  margin-top: 13px;
   margin-right: 13px;
   font-size: var(--currentScreenFontSize);
   user-select: text;

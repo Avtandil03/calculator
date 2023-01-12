@@ -277,36 +277,68 @@ document.addEventListener("DOMContentLoaded", () => {
   /* onTopOthers mode */
 
   onTopOtherBtn.addEventListener("click", onTopOtherMode);
+  let prevois = {firstValue: false};
   function onTopOtherMode() {
-
+    let rect = calculator.getBoundingClientRect();
+    calculator.classList.remove("maximized");    
+    const changingElements = calculator.querySelectorAll(".sysMenu__leftContainer, .hideBtn, .minimizeBtn, .header, .header__menuBtn,  .header__title, .header__journalBtn, .screen__last, .memory__buttons");
     onTopOtherBtn.classList.toggle("active");
-    if(onTopOtherBtn.classList.contains("active")){      
+    if(onTopOtherBtn.classList.contains("active")){
       minWidth = 160;
       minHeight = 200;
       maxWidth = 500;
       maxHeight = 500;
-      calculator.style.width = "320px";
-      calculator.style.height = "394px";
-      calculator.style.top = "30px";
-      calculator.style.left = (document.body.clientWidth - 350) + "px";
-      calculator.querySelectorAll(".sysMenu__leftContainer, .hideBtn, .minimizeBtn, .header, .header__menuBtn,  .header__title, .header__journalBtn, .screen__last, .memory__buttons, #percentBtn, #dividedBy1Btn, #degreeBtn, #squareRootBtn").forEach((e)=>{
+      if(prevois.firstValue){
+        setPrevoisSizes();
+      }else{
+        calculator.style.width = "320px";
+        calculator.style.height = "394px";
+        calculator.style.top = "30px";
+        calculator.style.left = (document.body.clientWidth - 350) + "px";
+        prevois.firstValue = true;
+      }
+
+      rightContainer.classList.add("hidden");
+      changingElements.forEach((e)=>{
          e.classList.add("immediatelyHide") ;
       });
-       currentScreen.style = `font-size: 28px; margin-top: 0; `;
-       currentScreen.classList.add("resizingOnHeight");
-       onTopOtherBtn.style = "position: absolute ; left: 2px ; top: -30px ;";
-    } else{
+      currentScreen.classList.add("resizingOnHeight");
+      currentScreen.style = `font-size: 28px;`;
+      onTopOtherBtn.style = "position: absolute ; left: 2px ; top: -30px ;";
+    } else {
+      setPrevoisSizes();
       minWidth = 320;
       minHeight = 500;
       maxWidth = document.body.clientWidth;
       maxHeight = document.body.clientHeight;
+      changingElements.forEach((e)=>{
+         e.classList.remove("immediatelyHide");
+      });
+      if(calculator.clientWidth > minWidth + 245) rightContainer.classList.remove("hidden");
+      currentScreen.style = `font-size: 46px;  `;
+      currentScreen.classList.remove("resizingOnHeight");
+      onTopOtherBtn.style = "position: initial ; left: auto ; top: auto ;";
     }
+    
+    fixPrevoisSizes(rect);
+  }
 
+  function setPrevoisSizes(){
+    calculator.style.width = prevois.width ;
+    calculator.style.height = prevois.height ;
+    calculator.style.top = prevois.top ;
+    calculator.style.left = prevois.left ;   
+  }
+
+  function fixPrevoisSizes(rect){
+    prevois.width = rect.width + "px";
+    prevois.height = rect.height + "px";
+    prevois.top = rect.top + "px";
+    prevois.left = rect.left + "px"; 
   }
 
   function onTopStylesSet(){
-    currentScreen.style = 
-          `font-size:${scaleY(calculator.clientHeight,160,500,18,38)}px; margin-top: ${scaleY(calculator.clientHeight, 200, 500, 0, 25)}px !important; `;
+    currentScreen.style = `font-size:${scaleY(calculator.clientHeight,160,500,18,38)}px;`;
     if(calculator.clientHeight < 400){
       calculator.querySelectorAll("#percentBtn, #dividedBy1Btn, #degreeBtn, #squareRootBtn").forEach((e)=>{
         e.classList.add("immediatelyHide") ;
