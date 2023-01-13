@@ -23,7 +23,26 @@ document.addEventListener("DOMContentLoaded", () => {
   modeMenu = document.querySelector(".modeMenu"),
   resizers = document.querySelectorAll(".resizer"),
   leftContainer = document.querySelector(".calculator__leftContainer"),
-  rightContainer = document.querySelector(".calculator__rightContainer");
+  rightContainer = document.querySelector(".calculator__rightContainer"),
+
+  numberBtn = document.querySelectorAll("[data-number-btn]"),
+  operatorBtn = document.querySelectorAll("[data-operator-btn]"),
+  percentBtn = document.querySelector("#percentBtn"),
+  clearCurrentScreenBtn = document.querySelector("#clearCurrentScreenBtn"),
+  clearAllBtn = document.querySelector("#clearAllBtn"),
+  backspaceBtn = document.querySelector("#backspaceBtn"),
+  dividedBy1Btn = document.querySelector("#dividedBy1Btn"),
+  degreeBtn = document.querySelector("#degreeBtn"),
+  squareRootBtn = document.querySelector("#squareRootBtn"),
+  invertorBtn = document.querySelector("#invertorBtn"),
+  equalBtn = document.querySelector("#equalBtn");
+
+  /* calculator functional */
+
+  class Calculator  {
+    constructor(currentScreen, lastScreen, historyJournal, memoryJournal){
+    }
+  }
 
 
   // 
