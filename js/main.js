@@ -41,8 +41,140 @@ document.addEventListener("DOMContentLoaded", () => {
 
   class Calculator  {
     constructor(currentScreen, lastScreen, historyJournal, memoryJournal){
+      this.currentScreen = currentScreen;
+      this.lastScreen = lastScreen;
+      this.historyJournal = historyJournal;
+      this.memoryJournal = memoryJournal;
+      this.clearAll();
+
     }
+
+    clear(){
+      this.currentOperand = "0";
+      this.currentScreenUpdate();
+    }
+
+    clearAll(){
+      this.currentOperand = "0";
+      this.lastOperand = "";
+      this.lastScreen.innerText = "";
+      this.currentScreenUpdate();
+      this.lastScreenUpdate();
+    }
+
+    backspace(){
+      this.currentOperand = this.currentOperand.slice(0, -1);
+      this.currentScreenUpdate(); 
+    }
+
+    toPassNo(number){
+      if(number == "," && this.currentOperand.includes(",") || 
+          number == "0" && this.currentOperand == "0"){
+        return;
+      }
+      if(this.currentOperand == "0" && number != ",") this.currentOperand = "";
+
+      this.currentOperand = this.currentOperand + number;
+      this.currentScreenUpdate();
+    }
+
+    chooseOperator(operator){
+      if(this.currentOperand == ""){
+        return;
+      }
+      if(this.lastOperand != ""){
+        this.compute();
+      }
+      this.operator = operator;
+      this.lastOperand = this.currentOperand;
+      //this.currentOperand = "0";
+      this.currentScreenUpdate();/*  */
+      this.currentScreenUpdate();
+      this.lastScreenUpdate();
+
+    }
+    compute(){
+      let computation;
+      const last = parseFloat(this.lastOperand);
+      const current = parseFloat(this.currentOperand);
+      if(isNaN(last) || isNaN(current)){
+        return;
+      }
+      switch (this.operator) {
+        case "÷":
+          computation = current / last;
+          break;
+        case "×":
+          computation = current * last;
+          break;
+        case "-":
+          computation = current - last;
+          break;
+        case "+":
+          computation = current + last;
+          break;
+        default:
+          return;
+      }
+      this.lastOperand = computation;
+      //this.operator = '';
+      //this.lastOperand = "";
+
+      this.currentScreenUpdate();
+      this.lastScreenUpdate();
+    }
+    getDisplayNo(number){
+      
+    }
+    currentScreenUpdate(){
+      if( this.currentScreen.innerText == 0){
+        this.currentScreen.innerText = "";
+      }
+      this.currentScreen.innerText = this.currentOperand; 
+           
+    }
+    lastScreenUpdate(){
+      this.lastScreen.innerText = this.lastOperand;
+       if(this.operator != null)this.lastScreen.innerText = `${this.lastOperand} ${this.operator} `;
+    }
+
+
   }
+
+  const _calculator = new Calculator(currentScreen, lastScreen, historyJournal, memoryJournal);
+
+  numberBtn.forEach(btn => {
+    btn.addEventListener("click", ()=>{
+      _calculator.toPassNo(btn.innerText)
+    });
+  })
+  operatorBtn.forEach(btn => {
+    console.log(btn);
+    btn.addEventListener("click", () => {
+      _calculator.chooseOperator(btn.innerText);
+    })
+  })
+  clearAllBtn.addEventListener("click", ()=>{
+    _calculator.clearAll();
+  } );
+  clearCurrentScreenBtn.addEventListener("click", () => {
+    _calculator.clear();
+  })
+  backspaceBtn.addEventListener("click", () => {
+    _calculator.backspace();
+  })
+  equalBtn.addEventListener("click", ()=> {
+    _calculator.compute();
+  });
+
+
+
+
+
+
+
+
+
 
 
   // 
@@ -63,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
       y : e.clientY - rect.y
     }      
     
-    if(e.target != hideBtn & e.target != minimizeBtn & e.target != closeBtn ){
+    if(e.target != hideBtn && e.target != minimizeBtn && e.target != closeBtn ){
       document.body.addEventListener("mousemove", mousemove);
     }      
     function mousemove(e) {
@@ -160,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         calculator.style.height = controlMinSize(dynamicValue.height, minHeight, maxHeight) + "px";
         calculator.style.width = controlMinSize(dynamicValue.width, minWidth, maxWidth) + "px"; 
-        if(dynamicValue.width & !onTopOtherBtn.classList.contains("active")) {
+        if(dynamicValue.width && !onTopOtherBtn.classList.contains("active")) {
           displayRightContainer(calculator.clientWidth);
         }
         if(currentScreen.classList.contains("resizingOnHeight")) {
