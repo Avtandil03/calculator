@@ -57,85 +57,77 @@ document.addEventListener("DOMContentLoaded", () => {
     clearAll(){
       this.currentOperand = "0";
       this.lastOperand = "";
+      this.answear = 0;
       this.lastScreen.innerText = "";
+      this.operator = "";
       this.currentScreenUpdate();
-      this.lastScreenUpdate();
     }
 
     backspace(){
       this.currentOperand = this.currentOperand.slice(0, -1);
-      this.currentScreenUpdate(); 
+      if(this.currentOperand == "") this.currentOperand = "0"
+      this.currentScreenUpdate();
     }
 
     toPassNo(number){
-      if(number == "," && this.currentOperand.includes(",") || 
-          number == "0" && this.currentOperand == "0"){
+      let done ;
+      if( number == "," && this.currentOperand.includes(",")
+          || number == "0" && this.currentOperand === "0"){
         return;
       }
-      if(this.currentOperand == "0" && number != ",") this.currentOperand = "";
-
-      this.currentOperand = this.currentOperand + number;
-      this.currentScreenUpdate();
+      if(this.currentOperand == "0" && number != ","){
+        this.currentOperand = "";
+      }
+      this.currentOperand = this.currentOperand + number;      
+      this.currentScreenUpdate(this.currentOperand);
+      if(this.operator && done) {
+        // this.compute();
+        done = false;
+      }
+      done = true;
     }
 
     chooseOperator(operator){
-      if(this.currentOperand == ""){
-        return;
-      }
-      if(this.lastOperand != ""){
-        this.compute();
-      }
       this.operator = operator;
-      this.lastOperand = this.currentOperand;
-      //this.currentOperand = "0";
-      this.currentScreenUpdate();/*  */
-      this.currentScreenUpdate();
-      this.lastScreenUpdate();
-
+      if(this.currentOperand !== 0) this.lastOperand = this.currentOperand; 
+      lastScreen.innerHTML = `${this.lastOperand} ${this.operator}`;
+      this.currentScreenUpdate(this.currentOperand);     
+      this.lastOperandFloat = parseFloat(this.lastOperand); 
+      this.currentOperand = 0;
     }
-    compute(){
-      let computation;
-      const last = parseFloat(this.lastOperand);
-      const current = parseFloat(this.currentOperand);
-      if(isNaN(last) || isNaN(current)){
-        return;
-      }
+
+    compute(){  
+      this.currentOperandFloat =(this.currentOperand !== 0)? parseFloat(this.currentOperand): parseFloat(currentScreen.innerHTML);
       switch (this.operator) {
         case "÷":
-          computation = current / last;
+          this.answear = this.currentOperandFloat / this.lastOperandFloat;
           break;
         case "×":
-          computation = current * last;
+          this.answear = this.currentOperandFloat * this.lastOperandFloat;
           break;
         case "-":
-          computation = current - last;
+          this.answear = this.currentOperandFloat - this.lastOperandFloat;
           break;
         case "+":
-          computation = current + last;
-          break;
-        default:
-          return;
+          this.answear = this.currentOperandFloat + this.lastOperandFloat;
+          break; 
+        case "":
+          this.lastScreenUpdate(`${this.currentOperandFloat} =`);
+          return;      
       }
-      this.lastOperand = computation;
-      //this.operator = '';
-      //this.lastOperand = "";
+      this.lastScreenUpdate(`${this.lastOperandFloat} ${this.operator} ${this.currentOperandFloat} =`);
+      this.lastOperand = this.answear;
+      this.currentScreenUpdate(this.answear);  
+    }
 
-      this.currentScreenUpdate();
-      this.lastScreenUpdate();
+    getDisplayNo(number){      
     }
-    getDisplayNo(number){
-      
+
+    currentScreenUpdate(value = 0){        
+      currentScreen.innerHTML = value;   
     }
-    currentScreenUpdate(){
-      if( this.currentScreen.innerText == 0){
-        this.currentScreen.innerText = "";
-      }
-      this.currentScreen.innerText = this.currentOperand; 
-           
-    }
-    lastScreenUpdate(){
-      this.lastScreen.innerText = this.lastOperand;
-       if(this.operator != null)this.lastScreen.innerText = `${this.lastOperand} ${this.operator} `;
+    lastScreenUpdate(value = ""){
+      lastScreen.innerHTML = value;
     }
 
 
