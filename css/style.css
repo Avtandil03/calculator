@@ -516,6 +516,18 @@ display: flex;
   font-size: 18px;
   padding: 4px;
 }
+.journal{
+  position: relative;
+}
+.journal span {
+  position: absolute;
+  top:0;
+  left: 0;
+  font-size: 14px;
+}
+.journalWrapper .answear{
+  font-size: 24px;
+}
 .memoryJournal .journalWrapper .memoryBtns{
   visibility:hidden;
 }
