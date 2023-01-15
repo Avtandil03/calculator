@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     clear(){
       this.currentOperand = "0";
-      this.currentScreenUpdate();
+      this.currentScreenUpdate(this.currentOperand);
     }
 
     clearAll(){
@@ -60,64 +60,66 @@ document.addEventListener("DOMContentLoaded", () => {
       this.answear = 0;
       this.lastScreen.innerText = "";
       this.operator = "";
-      this.currentScreenUpdate();
+      this.currentScreenUpdate(this.currentOperand);
     }
 
     backspace(){
       this.currentOperand = this.currentOperand.slice(0, -1);
       if(this.currentOperand == "") this.currentOperand = "0"
-      this.currentScreenUpdate();
+      this.currentScreenUpdate(this.currentOperand);
     }
 
     toPassNo(number){
-      let done ;
-      if( number == "," && this.currentOperand.includes(",")
+      if( number == "." && this.currentOperand.includes(".")
           || number == "0" && this.currentOperand === "0"){
         return;
       }
-      if(this.currentOperand == "0" && number != ","){
+      if(this.currentOperand == "0" && number != "."){
         this.currentOperand = "";
       }
       this.currentOperand = this.currentOperand + number;      
       this.currentScreenUpdate(this.currentOperand);
-      if(this.operator && done) {
-        // this.compute();
-        done = false;
-      }
-      done = true;
     }
 
     chooseOperator(operator){
+      if(this.loopInWork){
+        this.compute();
+      }
+      if(this.currentOperand !== 0 && this.lastOperand == ""){
+       this.lastOperand = this.currentOperand; 
+      }
       this.operator = operator;
-      if(this.currentOperand !== 0) this.lastOperand = this.currentOperand; 
       lastScreen.innerHTML = `${this.lastOperand} ${this.operator}`;
       this.currentScreenUpdate(this.currentOperand);     
       this.lastOperandFloat = parseFloat(this.lastOperand); 
       this.currentOperand = 0;
+      this.loopInWork = true;
     }
 
     compute(){  
       this.currentOperandFloat =(this.currentOperand !== 0)? parseFloat(this.currentOperand): parseFloat(currentScreen.innerHTML);
       switch (this.operator) {
         case "÷":
-          this.answear = this.currentOperandFloat / this.lastOperandFloat;
+          this.answear = this.lastOperandFloat / this.currentOperandFloat;
           break;
         case "×":
-          this.answear = this.currentOperandFloat * this.lastOperandFloat;
+          this.answear = this.lastOperandFloat * this.currentOperandFloat;
           break;
         case "-":
-          this.answear = this.currentOperandFloat - this.lastOperandFloat;
+          this.answear = this.lastOperandFloat - this.currentOperandFloat;
           break;
         case "+":
-          this.answear = this.currentOperandFloat + this.lastOperandFloat;
+          this.answear = this.lastOperandFloat + this.currentOperandFloat;
           break; 
         case "":
           this.lastScreenUpdate(`${this.currentOperandFloat} =`);
           return;      
       }
       this.lastScreenUpdate(`${this.lastOperandFloat} ${this.operator} ${this.currentOperandFloat} =`);
+      this.lastOperandFloat = this.answear;
       this.lastOperand = this.answear;
       this.currentScreenUpdate(this.answear);  
+      this.loopInWork = false;
     }
 
     getDisplayNo(number){      
