@@ -12,6 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
   currentScreen = document.querySelector(".screen__current"),
   memoryBtns = document.querySelectorAll(".memoryBtn"),
   memoryJournalBtn = document.querySelector("#memoryJournalBtn"),
+  saveMemory = document.querySelector("#saveMemory"),
+  addMemory = document.querySelector("#addMemory"),
+  subMemory = document.querySelector("#subMemory"),
   historyJournal = document.querySelector(".historyJournal"),
   memoryJournal = document.querySelector(".memoryJournal"),
   modeHistory = document.querySelector(".modeHistory"),
@@ -35,9 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
   degreeBtn = document.querySelector("#degreeBtn"),
   squareRootBtn = document.querySelector("#squareRootBtn"),
   invertorBtn = document.querySelector("#invertorBtn"),
-  equalBtn = document.querySelector("#equalBtn");
+  equalBtn = document.querySelector("#equalBtn"),
+  deleteBtn = document.querySelector(".deleteBtn");
 
   /* calculator functional */
+  let history = [];
+  let memory = [];
 
   class Calculator  {
     constructor(currentScreen, lastScreen, historyJournal, memoryJournal){
@@ -47,6 +53,12 @@ document.addEventListener("DOMContentLoaded", () => {
       this.memoryJournal = memoryJournal;
       this.clearAll();
 
+      this.tempHistory = {
+        lastOperand: "2",
+        operator: "+",
+        currentOperand: "4",
+        answear: "6"
+      }
     }
 
     clear(){
@@ -60,6 +72,9 @@ document.addEventListener("DOMContentLoaded", () => {
       this.answear = 0;
       this.lastScreen.innerText = "";
       this.operator = "";
+      this.lastOperandFloat = 0;
+      this.answear = 0;
+      this.currentOperandFloat = 0;
       this.currentScreenUpdate(this.currentOperand);
     }
 
@@ -122,9 +137,6 @@ document.addEventListener("DOMContentLoaded", () => {
       this.loopInWork = false;
     }
 
-    getDisplayNo(number){      
-    }
-
     currentScreenUpdate(value = 0){        
       currentScreen.innerHTML = value;   
     }
@@ -132,6 +144,95 @@ document.addEventListener("DOMContentLoaded", () => {
       lastScreen.innerHTML = value;
     }
 
+    setHistory(num){
+      if(history.length > 20){
+        history.splice(0, 1);
+        num = num - 1;
+      }
+      history[num] = {
+        expression : lastScreen.innerHTML,
+        answear: currentScreen.innerHTML
+      }
+      console.log(`${history[num].expression} ${history[num].answear} `);
+      this.addHistoryEl(history[num]);
+    }
+    addHistoryEl(object){
+      const wrapper = document.createElement("div"),
+        expression = document.createElement("p"),
+        answear = document.createElement("p");
+
+      wrapper.classList.add("journalWrapper");
+      expression.classList.add("expression");
+      answear.classList.add("answear");
+
+      wrapper.appendChild(expression);
+      wrapper.appendChild(answear);
+      historyJournal.prepend(wrapper);
+
+      let arr = historyJournal.querySelectorAll(".journalWrapper");
+      if(arr.length > 0 && document.querySelector(".historyJournal__empty")){
+        document.querySelector(".historyJournal__empty").style.display = "none";
+      } 
+      if(arr.length > 19){
+        arr[arr.length - 1].remove();
+      }
+
+      expression.innerText = object.expression;
+      answear.innerText = object.answear;
+    }
+    setMemory(num){
+      memory[num] = currentScreen.innerHTML;
+      this.addMemoryEl(memory[num])
+    }
+    addMemoryEl(value){
+      const wrapper = document.createElement("div"),
+        btnWrapper = document.createElement("div"),
+        memoryValue = document.createElement("p"),
+        clearBtn = document.createElement("button"),
+        addBtn = document.createElement("button"),
+        subBtn = document.createElement("button");
+      wrapper.classList.add("journalWrapper");
+      btnWrapper.classList.add("memoryBtns");
+      memoryValue.classList.add("memoryValue");
+      clearBtn.classList.add("memoryBtn");
+      addBtn.classList.add("memoryBtn");
+      subBtn.classList.add("memoryBtn");
+
+      wrapper.appendChild(memoryValue);
+      wrapper.appendChild(btnWrapper);
+      btnWrapper.appendChild(clearBtn);
+      btnWrapper.appendChild(addBtn);
+      btnWrapper.appendChild(subBtn);
+      memoryJournal.prepend(wrapper);
+      clearBtn.innerText = "MC";
+      addBtn.innerText = "M+";
+      subBtn.innerText = "M-";
+
+      let arr = memoryJournal.querySelectorAll(".journalWrapper");
+      if(arr.length > 0 && document.querySelector(".memoryJournal__empty")){
+        document.querySelector(".memoryJournal__empty").style.display = "none";
+      } 
+      // if(arr.length > 19){
+      //   arr[arr.length - 1].remove();
+      // }
+
+      memoryValue.innerText = value;
+    }
+    clearJournals(clearHistory){
+      if(clearHistory) {
+        history = [];      
+        historyJournal.querySelectorAll(".journalWrapper").forEach((e)=>{ 
+          document.querySelector(".historyJournal__empty").style.display = "block";
+          e.remove();
+        })
+      }else{
+        memory = [];      
+        memoryJournal.querySelectorAll(".journalWrapper").forEach((e)=>{
+          document.querySelector(".memoryJournal__empty").style.display = "block";
+          e.remove();
+        })
+      }
+    }
 
   }
 
@@ -143,7 +244,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   })
   operatorBtn.forEach(btn => {
-    console.log(btn);
     btn.addEventListener("click", () => {
       _calculator.chooseOperator(btn.innerText);
     })
@@ -159,7 +259,14 @@ document.addEventListener("DOMContentLoaded", () => {
   })
   equalBtn.addEventListener("click", ()=> {
     _calculator.compute();
+    _calculator.setHistory(history.length);
   });
+  deleteBtn.addEventListener("click", ()=> {
+    _calculator.clearJournals(historyJournal.classList.contains("active"));
+  })
+  saveMemory.addEventListener("click", ()=> {
+    _calculator.setMemory(memory);
+  })
 
 
 
