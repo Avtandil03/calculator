@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
         expression : lastScreen.innerHTML,
         answear: currentScreen.innerHTML
       }
-      console.log(`${history[num].expression} ${history[num].answear} `);
+      // console.log(`${history[num].expression} ${history[num].answear} `);
       this.addHistoryEl(history[num]);
     }
     addHistoryEl(object){
@@ -211,12 +211,14 @@ document.addEventListener("DOMContentLoaded", () => {
       let arr = memoryJournal.querySelectorAll(".journalWrapper");
       if(arr.length > 0 && document.querySelector(".memoryJournal__empty")){
         document.querySelector(".memoryJournal__empty").style.display = "none";
-      } 
-      // if(arr.length > 19){
-      //   arr[arr.length - 1].remove();
-      // }
-
+      }
       memoryValue.innerText = value;
+    }
+    addMemory(){
+      
+    }
+    subMemory(){
+
     }
     clearJournals(clearHistory){
       if(clearHistory) {
@@ -233,7 +235,6 @@ document.addEventListener("DOMContentLoaded", () => {
         })
       }
     }
-
   }
 
   const _calculator = new Calculator(currentScreen, lastScreen, historyJournal, memoryJournal);
@@ -267,16 +268,32 @@ document.addEventListener("DOMContentLoaded", () => {
   saveMemory.addEventListener("click", ()=> {
     _calculator.setMemory(memory);
   })
+  addMemory.addEventListener("click", ()=>{
+    _calculator.addMemory();
+  })
+  subMemory.addEventListener("click", ()=>{
+    _calculator.subMemory();
+  })
 
 
 
 
 
+  historyJournal.addEventListener("click", e=>{
+    const target = e.target;
+    let clickedElement ;
+    if(target.classList.contains("journalWrapper") && target){
+      clickedElement = target;
+    }else if(target.classList.contains("expression") || target.classList.contains("answear")){
+      clickedElement = target.parentElement;
+    }
 
-
-
-
-
+    if(clickedElement){
+      _calculator.lastScreenUpdate(clickedElement.querySelector(".expression").innerText);
+      _calculator.currentScreenUpdate(clickedElement.querySelector(".answear").innerText);
+      _calculator.currentOperand = clickedElement.querySelector(".answear").innerText;
+    }
+  })
 
   // 
   let minWidth = 320 ,
