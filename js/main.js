@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
   currentScreen = document.querySelector(".screen__current"),
   memoryBtns = document.querySelectorAll(".memoryBtn"),
   memoryJournalBtn = document.querySelector("#memoryJournalBtn"),
+  clearMemory = document.querySelector("#clearMemory"),
+  memoryRecall = document.querySelector("#callFromMemory"),
   saveMemory = document.querySelector("#saveMemory"),
   addMemory = document.querySelector("#addMemory"),
   subMemory = document.querySelector("#subMemory"),
@@ -214,25 +216,38 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       memoryValue.innerText = value;
     }
-    addMemory(){
-      
+    updateLastMemoryEl(value){
+      memoryJournal.querySelector(".journalWrapper .memoryValue").innerText = value;
     }
-    subMemory(){
-
+    addLastMemory(){
+      if(memory.length > 0){        
+      memory[memory.length - 1] = (+memory[memory.length - 1] + +currentScreen.innerHTML) + "";
+      }else{
+        this.setMemory(memory.length); 
+      }
+      this.updateLastMemoryEl(memory[memory.length - 1]);
+    }
+    subLastMemory(value){
+      if(memory.length > 0){        
+        memory[memory.length - 1] = (+memory[memory.length - 1] - +currentScreen.innerHTML) + "";
+        }else{
+          this.setMemory(memory.length); 
+        }
+        this.updateLastMemoryEl(memory[memory.length - 1]);      
     }
     clearJournals(clearHistory){
       if(clearHistory) {
         history = [];      
         historyJournal.querySelectorAll(".journalWrapper").forEach((e)=>{ 
-          document.querySelector(".historyJournal__empty").style.display = "block";
           e.remove();
         })
+        document.querySelector(".historyJournal__empty").style.display = "block";
       }else{
         memory = [];      
         memoryJournal.querySelectorAll(".journalWrapper").forEach((e)=>{
-          document.querySelector(".memoryJournal__empty").style.display = "block";
           e.remove();
-        })
+        })        
+        document.querySelector(".memoryJournal__empty").style.display = "block";
       }
     }
   }
@@ -264,36 +279,104 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   deleteBtn.addEventListener("click", ()=> {
     _calculator.clearJournals(historyJournal.classList.contains("active"));
+    updateMemoryBtnsStatus();
   })
   saveMemory.addEventListener("click", ()=> {
-    _calculator.setMemory(memory);
-  })
-  addMemory.addEventListener("click", ()=>{
-    _calculator.addMemory();
+    _calculator.setMemory(memory.length);
+    updateMemoryBtnsStatus();
   })
   subMemory.addEventListener("click", ()=>{
-    _calculator.subMemory();
+    _calculator.subLastMemory();
+    updateMemoryBtnsStatus();
   })
-
-
-
-
-
+  addMemory.addEventListener("click", ()=>{
+    _calculator.addLastMemory();
+    updateMemoryBtnsStatus();
+  })
   historyJournal.addEventListener("click", e=>{
+    returnValueFrom(e, historyJournal, ["answear", "expression"]);
+  })
+  memoryJournal.addEventListener("click", e=>{
+    returnValueFrom(e, memoryJournal, ["memoryValue", "memoryBtns"])
+  })
+  memoryRecall.addEventListener("click", ()=>{
+    _calculator.currentOperand = memory[memory.length -1];
+    _calculator.currentScreenUpdate(_calculator.currentOperand);
+  })
+  clearMemory.addEventListener("click", ()=>{    
+    _calculator.clearJournals(false);
+    updateMemoryBtnsStatus();
+  })
+  memoryJournal.addEventListener("click", e=>{
+    let clickedWrapper;
+    const target = e.target ;
+
+    if(target.classList.contains("memoryBtns") || target.classList.contains("memoryValue")){
+      clickedWrapper = target.parentElement;
+    }else if(target.classList.contains("memoryBtn")){
+      clickedWrapper = target.parentElement.parentElement;
+    }
+
+    const journalList = memoryJournal.querySelectorAll(".journalWrapper");
+    let wrapperNum ;
+    for (let i = 0; i < journalList.length; i++) {
+      if(journalList[i] == clickedWrapper){
+        wrapperNum = i;
+      }      
+    }
+    let memoryNum = memory.length - 1 - wrapperNum;
+    const thisValue = journalList[wrapperNum].querySelector("p");
+    // const thisValue = clickedWrapper.querySelector("p");
+    
+    if(target.classList.contains("memoryBtn")){
+      switch (target.innerText) {
+        case "MC":
+          journalList[wrapperNum].remove();
+          memory.splice(memoryNum, 1);
+          _calculator.clearJournals(false);
+          break;
+        case "M+":
+          memory[memoryNum] = +memory[memoryNum] + +currentScreen.innerHTML + "";
+          thisValue.innerText = memory[memoryNum];
+          break;
+        case "M-":
+          memory[wrapperNum] = +memory[memoryNum] - +currentScreen.innerHTML + "";
+          thisValue.innerText = memory[memoryNum];
+          break;
+      }
+    }
+  })
+  
+
+  function returnValueFrom(e,journal, childClasses){
     const target = e.target;
     let clickedElement ;
     if(target.classList.contains("journalWrapper") && target){
       clickedElement = target;
-    }else if(target.classList.contains("expression") || target.classList.contains("answear")){
+    }else if(target.classList.contains(childClasses[0]) || target.classList.contains(childClasses[1])){
       clickedElement = target.parentElement;
     }
-
+    
     if(clickedElement){
-      _calculator.lastScreenUpdate(clickedElement.querySelector(".expression").innerText);
-      _calculator.currentScreenUpdate(clickedElement.querySelector(".answear").innerText);
-      _calculator.currentOperand = clickedElement.querySelector(".answear").innerText;
+      if(journal == historyJournal) {
+        _calculator.lastScreenUpdate(clickedElement.querySelector("." + childClasses[1]).innerText);
+      }
+      _calculator.currentScreenUpdate(clickedElement.querySelector("." + childClasses[0]).innerText);
+      _calculator.currentOperand = clickedElement.querySelector("." + childClasses[0]).innerText;
     }
-  })
+  }
+  function updateMemoryBtnsStatus() {
+    const changeBtns = [memoryJournalBtn, clearMemory, memoryRecall];
+    console.log(memory)
+    changeBtns.forEach(btn => {
+      if(memory.length > 0){
+        btn.classList.remove("notActiveBtn");
+      }else{
+        btn.classList.add("notActiveBtn");
+      }
+    })
+
+  }
 
   // 
   let minWidth = 320 ,
