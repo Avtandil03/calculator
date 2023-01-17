@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
   equalBtn = document.querySelector("#equalBtn"),
   deleteBtn = document.querySelector(".deleteBtn");
 
+
   /* calculator functional */
   let history = [];
   let memory = [];
@@ -137,6 +138,10 @@ document.addEventListener("DOMContentLoaded", () => {
       this.lastOperand = this.answear;
       this.currentScreenUpdate(this.answear);  
       this.loopInWork = false;
+    }
+    computePercent(){
+      this.currentOperand = this.lastOperandFloat / 100 * +this.currentOperand;
+      this.compute();
     }
 
     currentScreenUpdate(value = 0){        
@@ -276,7 +281,10 @@ document.addEventListener("DOMContentLoaded", () => {
   equalBtn.addEventListener("click", ()=> {
     _calculator.compute();
     _calculator.setHistory(history.length);
-  });
+  })
+  percentBtn.addEventListener("click", ()=>{
+    _calculator.computePercent();
+  })
   deleteBtn.addEventListener("click", ()=> {
     _calculator.clearJournals(historyJournal.classList.contains("active"));
     updateMemoryBtnsStatus();
