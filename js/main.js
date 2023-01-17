@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     chooseOperator(operator){
       if(this.loopInWork){
-        this.compute();
+        this.compute(this.operator);
       }
       if(this.currentOperand !== 0 && this.lastOperand == ""){
        this.lastOperand = this.currentOperand; 
@@ -114,9 +114,9 @@ document.addEventListener("DOMContentLoaded", () => {
       this.loopInWork = true;
     }
 
-    compute(){  
+    compute(operator){  
       this.currentOperandFloat =(this.currentOperand !== 0)? parseFloat(this.currentOperand): parseFloat(currentScreen.innerHTML);
-      switch (this.operator) {
+      switch (operator) {
         case "÷":
           this.answear = this.lastOperandFloat / this.currentOperandFloat;
           break;
@@ -131,9 +131,23 @@ document.addEventListener("DOMContentLoaded", () => {
           break; 
         case "":
           this.lastScreenUpdate(`${this.currentOperandFloat} =`);
-          return;      
+          return;       
+        case "1/(":
+          this.answear = 1 / this.lastOperandFloat;
+          break;
+        case "sqr(":
+          this.answear = 1 / this.lastOperandFloat;
+          break;
+        case "√(":
+          this.answear = 1 / this.lastOperandFloat;
+          break;
       }
-      this.lastScreenUpdate(`${this.lastOperandFloat} ${this.operator} ${this.currentOperandFloat} =`);
+      if(this.operator == "1/(" || this.operator == "sqr(" || this.operator == "(√"){
+        
+        this.lastScreenUpdate(`${this.operator}${this.lastOperandFloat})`);
+        
+      }
+      this.lastScreenUpdate(`${this.lastOperandFloat} ${operator} ${this.currentOperandFloat} =`);
       this.lastOperandFloat = this.answear;
       this.lastOperand = this.answear;
       this.currentScreenUpdate(this.answear);  
@@ -141,7 +155,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     computePercent(){
       this.currentOperand = this.lastOperandFloat / 100 * +this.currentOperand;
-      this.compute();
+      this.compute(this.operator);
+    }
+    computeSubOperations(typeOperation, operand){
+      
     }
 
     currentScreenUpdate(value = 0){        
@@ -279,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
     _calculator.backspace();
   })
   equalBtn.addEventListener("click", ()=> {
-    _calculator.compute();
+    _calculator.compute(_calculator.operator);
     _calculator.setHistory(history.length);
   })
   percentBtn.addEventListener("click", ()=>{
@@ -315,6 +332,20 @@ document.addEventListener("DOMContentLoaded", () => {
     _calculator.clearJournals(false);
     updateMemoryBtnsStatus();
   })
+  dividedBy1Btn.addEventListener("click", ()=>{
+    
+  })
+  invertorBtn.addEventListener("click", ()=>{
+    if(_calculator.currentOperand = currentScreen.innerHTML){
+      _calculator.currentOperand = invertNum(_calculator.currentOperand)
+      _calculator.currentScreenUpdate(_calculator.currentOperand);
+    }else{
+      currentScreen.innerHTML = invertNum(currentScreen.innerHTML);
+    }
+  });
+  function invertNum(value){
+    return (+ value * -1) + "";
+  }
   memoryJournal.addEventListener("click", e=>{
     let clickedWrapper;
     const target = e.target ;
@@ -334,7 +365,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     let memoryNum = memory.length - 1 - wrapperNum;
     const thisValue = journalList[wrapperNum].querySelector("p");
-    // const thisValue = clickedWrapper.querySelector("p");
     
     if(target.classList.contains("memoryBtn")){
       switch (target.innerText) {
@@ -354,6 +384,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   })
+
   
 
   function returnValueFrom(e,journal, childClasses){
