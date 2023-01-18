@@ -115,7 +115,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     compute(operator){  
-      this.currentOperandFloat =(this.currentOperand !== 0)? parseFloat(this.currentOperand): parseFloat(currentScreen.innerHTML);
+      if(this.currentOperandFloat !== this.answear ||  this.loopInWork){        
+      this.currentOperandFloat =(this.currentOperand !== 0)? parseFloat(this.currentOperand): parseFloat
+      }(currentScreen.innerHTML);
       switch (operator) {
         case "÷":
           this.answear = this.lastOperandFloat / this.currentOperandFloat;
@@ -130,21 +132,30 @@ document.addEventListener("DOMContentLoaded", () => {
           this.answear = this.lastOperandFloat + this.currentOperandFloat;
           break; 
         case "":
+          if(this.lastOperandFloat){            
+          this.lastScreenUpdate(`${this.subOperandFloat} =`);
+          }else{
           this.lastScreenUpdate(`${this.currentOperandFloat} =`);
+          }
           return;       
         case "1/(":
           this.answear = 1 / this.lastOperandFloat;
           break;
         case "sqr(":
-          this.answear = Math.pow(this.lastOperandFloat, 2);
+          this.answear = Math.pow(this.subOperandFloat, 2);
           break;
         case "√(":
-          this.answear =  Math.sqrt(this.lastOperandFloat);
+          this.answear =  Math.sqrt(this.subOperandFloat);
           break;
       }
-      if(operator == "1/(" || operator == "sqr(" || operator == "√("){        
-        this.lastScreenUpdate(`${operator}${this.lastOperandFloat})`);    
+      if(operator == "1/(" || operator == "sqr(" || operator == "√("){    
+        if(lastScreen.innerHTML == "") {
+        this.lastScreenUpdate(`${operator}${this.subOperandFloat})`);   
         this.lastOperandFloat = this.answear;
+        }else{
+        this.lastScreenUpdate(`${this.lastOperandFloat}${this.operator}${operator}${this.subOperandFloat})`);  
+        this.currentOperandFloat = this.answear;           
+        }
         this.lastOperand = this.answear;
         return;
       }
@@ -159,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
       this.compute(this.operator);
     }
     computeSubOperations(typeOperation ){
-      this.lastOperandFloat = parseFloat(currentScreen.innerHTML);
+      this.subOperandFloat = parseFloat(currentScreen.innerHTML);
       this.compute(typeOperation);
     }
 
