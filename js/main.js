@@ -136,16 +136,17 @@ document.addEventListener("DOMContentLoaded", () => {
           this.answear = 1 / this.lastOperandFloat;
           break;
         case "sqr(":
-          this.answear = 1 / this.lastOperandFloat;
+          this.answear = Math.pow(this.lastOperandFloat, 2);
           break;
         case "√(":
-          this.answear = 1 / this.lastOperandFloat;
+          this.answear =  Math.sqrt(this.lastOperandFloat);
           break;
       }
-      if(this.operator == "1/(" || this.operator == "sqr(" || this.operator == "(√"){
-        
-        this.lastScreenUpdate(`${this.operator}${this.lastOperandFloat})`);
-        
+      if(operator == "1/(" || operator == "sqr(" || operator == "√("){        
+        this.lastScreenUpdate(`${operator}${this.lastOperandFloat})`);    
+        this.lastOperandFloat = this.answear;
+        this.lastOperand = this.answear;
+        return;
       }
       this.lastScreenUpdate(`${this.lastOperandFloat} ${operator} ${this.currentOperandFloat} =`);
       this.lastOperandFloat = this.answear;
@@ -157,8 +158,9 @@ document.addEventListener("DOMContentLoaded", () => {
       this.currentOperand = this.lastOperandFloat / 100 * +this.currentOperand;
       this.compute(this.operator);
     }
-    computeSubOperations(typeOperation, operand){
-      
+    computeSubOperations(typeOperation ){
+      this.lastOperandFloat = parseFloat(currentScreen.innerHTML);
+      this.compute(typeOperation);
     }
 
     currentScreenUpdate(value = 0){        
@@ -333,7 +335,13 @@ document.addEventListener("DOMContentLoaded", () => {
     updateMemoryBtnsStatus();
   })
   dividedBy1Btn.addEventListener("click", ()=>{
-    
+    _calculator.computeSubOperations("1/(");
+  })
+  degreeBtn.addEventListener("click", ()=>{
+    _calculator.computeSubOperations("sqr(");
+  })
+  squareRootBtn.addEventListener("click", ()=>{
+    _calculator.computeSubOperations("√(");
   })
   invertorBtn.addEventListener("click", ()=>{
     if(_calculator.currentOperand = currentScreen.innerHTML){

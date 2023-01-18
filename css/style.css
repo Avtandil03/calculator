@@ -521,8 +521,8 @@ display: flex;
 }
 .journal span {
   position: absolute;
-  top:0;
-  left: 0;
+  top:10px;
+  left: 8px;
   font-size: 14px;
 }
 .journalWrapper .answear{
@@ -552,6 +552,7 @@ display: flex;
 .historyJournal p:first-of-type {
   margin-bottom: 12px;
 }
+
 .rightContainer__delete{
   flex: 0 0 48px;
   display:flex;
