@@ -116,8 +116,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     compute(operator){  
       if(this.currentOperandFloat !== this.answear ||  this.loopInWork){        
-      this.currentOperandFloat =(this.currentOperand !== 0)? parseFloat(this.currentOperand): parseFloat
-      }(currentScreen.innerHTML);
+      this.currentOperandFloat =(this.currentOperand !== 0)? parseFloat(this.currentOperand): parseFloat(currentScreen.innerHTML)
+      };
       switch (operator) {
         case "÷":
           this.answear = this.lastOperandFloat / this.currentOperandFloat;
